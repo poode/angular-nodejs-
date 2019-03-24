@@ -1,0 +1,14 @@
+<kendo-grid [kendoGridBinding]="gridData"
+[height]="410"
+[filterable]="true"
+[pageSize]="pageSize"
+[skip]="skip"
+[pageable]="true"
+>
+<kendo-grid-column field="ProductID" title="التسلسل" width="100"  [filterable]="false">
+</kendo-grid-column>
+<kendo-grid-column field="ProductName" title="الصنف" >
+</kendo-grid-column>
+<kendo-grid-column field="Category.CategoryName" title="Category" width="200"  [filterable]="false">
+</kendo-grid-column>
+</kendo-grid>

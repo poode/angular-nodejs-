@@ -1,0 +1,35 @@
+var sqlite3 = require('sqlite3').verbose()
+var md5 = require('md5')
+
+const DBSOURCE = "db.sqlite"
+
+let db = new sqlite3.Database(DBSOURCE, (err) => {
+    if (err) {
+      // Cannot open database
+      console.error(err.message)
+      throw err
+    }else{
+        console.log('Connected to the SQLite database.')
+        db.run(`CREATE TABLE products (id INTEGER PRIMARY KEY AUTOINCREMENT,
+             name varchar(20),
+             hint text ,
+             quantity integer , 
+             priceTotal integer , 
+             TradepriceTotal integer ,
+             priceForPicese integer , 
+             TradePricePicese integer )`,
+        (err) => {
+            if (err) {
+                // Table already created
+            }else{
+                // Table just created, creating some rows
+                var insert = 'INSERT INTO products (name, hint, quantity ,priceTotal ,TradepriceTotal , priceForPicese ,  TradePricePicese) VALUES (?,?,?,?,?,?,?)'
+                db.run(insert, ["fan","Toshiba Fane",15 , 1000 , 105 ,120 , 90 ])
+                db.run(insert, ["Flag","Toshiba Flage",1502 , 100510 , 10512 ,1240 , 90 ])
+            }
+        });  
+    }
+});
+
+
+module.exports = db
