@@ -20,10 +20,10 @@ app.get("/", (req, res, next) => {
 });
 
 // Insert here other API endpoints
-app.all("/api/products", (req, res, next) => {
+app.get("/api/products", (req, res, next) => {
     var sql = "select * from products"
     var params = []
-    db.get(sql, params, (err, rows) => {
+    db.all(sql, params, (err, rows) => {
         if (err) {
           res.status(400).json({"error":err.message});
           return;
@@ -36,7 +36,7 @@ app.all("/api/products", (req, res, next) => {
 });
 
 
-app.get("/api/user/:id", (req, res, next) => {
+app.get("/api/product/:id", (req, res, next) => {
     var sql = "select * from products where id = ?"
     var params = [req.params.id]
     db.get(sql, params, (err, row) => {
@@ -50,6 +50,29 @@ app.get("/api/user/:id", (req, res, next) => {
         })
       });
 });
+
+
+app.get("/api/product/search/:name", (req, res, next) => {
+    
+    //"select * from products where name=? COLLATE NOCASE ";
+     var sql = `select * from products where (name=?) and ( name LIKE 'fla%')`
+
+    var params = [req.params.name]
+
+    db.all(sql, params, (err, row) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data":row
+        })
+        
+        
+      });
+});
+
 
 // add user 
 app.post("/api/user/", (req, res, next) => {

@@ -11,13 +11,13 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
     }else{
         console.log('Connected to the SQLite database.')
         db.run(`CREATE TABLE products (id INTEGER PRIMARY KEY AUTOINCREMENT,
-             name varchar(20),
+             name varchar(20) collate nocase,
              hint text ,
              quantity integer , 
-             priceTotal integer , 
-             TradepriceTotal integer ,
-             priceForPicese integer , 
-             TradePricePicese integer )`,
+             priceTotal real , 
+             TradepriceTotal real ,
+             priceForPicese real , 
+             TradePricePicese real )`,
         (err) => {
             if (err) {
                 // Table already created
@@ -26,6 +26,8 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                 var insert = 'INSERT INTO products (name, hint, quantity ,priceTotal ,TradepriceTotal , priceForPicese ,  TradePricePicese) VALUES (?,?,?,?,?,?,?)'
                 db.run(insert, ["fan","Toshiba Fane",15 , 1000 , 105 ,120 , 90 ])
                 db.run(insert, ["Flag","Toshiba Flage",1502 , 100510 , 10512 ,1240 , 90 ])
+                db.run(insert, ["Flag","Toshiba Flage2",1502 , 10051055 , 10512 ,1240 , 90 ])
+
             }
         });  
     }
