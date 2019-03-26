@@ -51,13 +51,12 @@ app.get("/api/product/:id", (req, res, next) => {
       });
 });
 
-
+// search name product 
 app.get("/api/product/search/:name", (req, res, next) => {
-    
-    //"select * from products where name=? COLLATE NOCASE ";
-     var sql = `select * from products where (name=?) and ( name LIKE 'fla%')`
-
-    var params = [req.params.name]
+  let SearchKey = '%' + req.params.name + '%';
+  var params = [SearchKey];
+     var sql = 'select * from  products   where name like ?';
+console.log(sql)
 
     db.all(sql, params, (err, row) => {
         if (err) {
@@ -72,7 +71,6 @@ app.get("/api/product/search/:name", (req, res, next) => {
         
       });
 });
-
 
 // add user 
 app.post("/api/user/", (req, res, next) => {
